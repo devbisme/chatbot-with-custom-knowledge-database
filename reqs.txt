@@ -1,0 +1,6 @@
+openai
+llama_index
+pypdf
+PyPDF2
+PyCryptodome
+gradio
