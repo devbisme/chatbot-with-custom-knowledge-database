@@ -11,9 +11,13 @@ from llama_index import (
     PromptHelper,
     ServiceContext,
     StorageContext,
+    LangchainEmbedding,
 )
+from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 from langchain.chat_models import ChatOpenAI
 import gradio as gr
+import torch
+torch.cuda.is_available = lambda: False
 
 # os.environ["OPENAI_API_KEY"] = 'Your API Key'
 
@@ -52,8 +56,12 @@ def construct_index(docs_dir=default_docs_dir, persist_dir=default_persist_dir):
     )
 
     # Make a ServiceContext for managing the processing of documents into an embedded vector database.
+    # service_context = ServiceContext.from_defaults(
+    #     llm_predictor=llm_predictor, prompt_helper=prompt_helper
+    # )
+    embed_model = LangchainEmbedding(HuggingFaceEmbeddings())
     service_context = ServiceContext.from_defaults(
-        llm_predictor=llm_predictor, prompt_helper=prompt_helper
+        prompt_helper=prompt_helper, embed_model=embed_model
     )
 
     # Create a StorageContext for storing/recalling the vector database.

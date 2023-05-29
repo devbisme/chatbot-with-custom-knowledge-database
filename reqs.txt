@@ -4,3 +4,4 @@ pypdf
 PyPDF2
 PyCryptodome
 gradio
+sentence_transformers
