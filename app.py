@@ -60,7 +60,7 @@ def construct_index(docs_dir=default_docs_dir, persist_dir=default_persist_dir):
     storage_context = StorageContext.from_defaults()
 
     # Create the vector database from the documents.
-    documents = SimpleDirectoryReader(docs_dir).load_data()
+    documents = SimpleDirectoryReader(docs_dir, recursive=True).load_data()
     index = GPTVectorStoreIndex.from_documents(
         documents, service_context=service_context, storage_context=storage_context
     )
